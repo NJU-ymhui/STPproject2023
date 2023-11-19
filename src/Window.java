@@ -7,6 +7,10 @@ public class Window {
     public void initPackets() {
         packets = new Packet[size / segmentSize]; // 先设置好size再初始化packets
     }
+    public boolean ifFinished() {
+        for (Packet packet : packets) if (!packet.isAck) return false;
+        return true;
+    }
     //todo
 }
 

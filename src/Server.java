@@ -1,7 +1,7 @@
 package src;
 
 public class Server extends Client{
-    public int MSS = 1500;
+    public int MSS = 0;
     private boolean up = false; //标记服务端是否已启用
     private int listenPort = -1; //监听端口
     private boolean connected = false;
@@ -31,7 +31,7 @@ public class Server extends Client{
         //todo
     }
     /***
-     * 对服务器状态作检查，如是否处于启用状态，监听端口是否为合法端口（-1即不合法端口）
+     * 对服务器状态作检查，如是否处于启用状态，监听端口是否为合法端口（-1即不合法端口）等
      * @return boolean
      */
     public boolean check() {
