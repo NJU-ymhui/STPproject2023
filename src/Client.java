@@ -3,6 +3,7 @@ package src;
 import java.net.*;
 
 public class Client {
+    // Hello^_^, I'm Pchan.
 
     public Packet receivedPacket;
 
