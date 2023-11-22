@@ -60,8 +60,14 @@ public class Packet {
     public byte[] getSrc() {
         return srcPort;
     }
+    public int getSrcPort() {
+        return (int) srcPort[0] * (int) srcPort[1];
+    }
     public byte[] getDest() {
         return destPort;
+    }
+    public int getDestPort() {
+        return (int) destPort[0] * (int) destPort[1];
     }
     public byte[] getId() {
         return id;
@@ -72,6 +78,7 @@ public class Packet {
     /**
      * @return 获得offset，也是首部长度
      * **/
+
     public int getOffset() {
         int offset = 0;
         for (int i = 0; i < 4; i++) {

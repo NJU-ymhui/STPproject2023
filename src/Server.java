@@ -47,6 +47,11 @@ public class Server extends Client{
         //todo
     }
 
+    public Server() {
+        super();
+        // todo
+    }
+
     //TODO 其余需要实现的但该代码中未考虑到的部分
 
     public static void main(String[] argv) throws Exception{
