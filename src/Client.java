@@ -2,6 +2,7 @@ package src;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.*;
 import java.util.Arrays;
@@ -12,8 +13,9 @@ import java.util.regex.Pattern;
 public class Client {
     // Hello^_^, I'm Pchan.
 
-    public Packet receivedPacket;
+    public Packet receivedPacket = null;
     public int MSS = 1500;
+    private int port;
 
     private byte[] serverAddr = new byte[4];
     private int serverPort;
@@ -21,6 +23,20 @@ public class Client {
     public void receive(Packet packet) {
         receivedPacket = packet;
     }
+
+    public byte[] getBytes(InputStream stream, int size) throws Exception{
+        int byteRead, len = 0;
+        byte[] buffer = new byte[size];
+        while ((byteRead = stream.read()) != -1 && len < size) {
+            buffer[len++] = (byte)byteRead;
+        }
+        return buffer;
+    }
+
+    public boolean checkACK(Packet packet) { return packet.ackValid(); }
+    public boolean checkPSH(Packet packet) { return packet.pushNow(); }
+    public boolean checkRST(Packet packet) { return packet.isReset(); }
+    public boolean checkURG(Packet packet) { return packet.urgentValid(); }
 
     /**
      * 检查FIN位，判断是否挥手释放连接

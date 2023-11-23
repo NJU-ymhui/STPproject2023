@@ -38,7 +38,7 @@ project-
 > 
 > //运行客户端
 > C:\>javac Client.java
-> C:\>java Client 
+> C:\>java Client 79
 > Client started!
 > Enter a port to connect:
 > 1234

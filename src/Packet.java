@@ -47,8 +47,10 @@ public class Packet {
         System.arraycopy(Window, 0, res, 14, 2);
         System.arraycopy(check, 0, res, 16, 2);
         System.arraycopy(urgent, 0, res, 18, 2);
+
         System.arraycopy(options, 0, res, 20, options.length);
         System.arraycopy(align, 0, res, 20 + options.length, align.length);
+
         if (dataLen > 0) {
             System.arraycopy(data.getData(), 0, res, 20 + options.length + align.length, dataLen);
         }
@@ -75,6 +77,7 @@ public class Packet {
     public byte[] getAck() {
         return ack;
     }
+    public byte[] getSpcBytes() { return spcBytes; }
     /**
      * @return 获得offset，也是首部长度
      * **/
