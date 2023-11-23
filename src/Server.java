@@ -24,21 +24,20 @@ public class Server extends Client{
      * 启用服务器
      * */
     public void start() {
-        //todo
+        up = true;
     }
     /**
      * 关闭服务器
      * */
     public void close() {
-        //todo
+        up = false;
     }
     /***
      * 对服务器状态作检查，如是否处于启用状态，监听端口是否为合法端口（-1即不合法端口）等
      * @return boolean
      */
     public boolean check() {
-        //todo
-        return true;
+        return up && listenPort >= 0;
     }
 
     /**
@@ -46,7 +45,7 @@ public class Server extends Client{
      * @param port
      * */
     public void listen(int port) {
-        //todo
+        listenPort = port;
     }
 
     public Server() {
@@ -147,9 +146,17 @@ public class Server extends Client{
                         server.setWindowSize();
                     }else {
                         System.out.println("Failed to get connected.");
-                        //todo 告诉client连接失败，send RST=1
+                        //告诉client连接失败，send RST=1
+                        spcBytes[1] = (byte) (spcBytes[1] | (1 << 2));// RST置1
+                        checkSum = 1;// todo calculate checkSum
+                        Packet failure = new Packet(
+                            server.receivedPacket.getDest(), server.receivedPacket.getSrc(), id, Ack,
+                                spcBytes, server.receivedPacket.getWindow(), Transformer.toBytes(checkSum, 2),
+                                server.receivedPacket.getUrgent(), server.receivedPacket.getOptions(),
+                                server.receivedPacket.getAlign(), server.MSS
+                        );
+                        bytesToClient.write(failure.getBytes()); // 通知client连接失败
                     }
-
                 }
                 else continue;// 对于未建立连接时的一切SYN != 1 || ACK != 0的报文直接丢弃
             }
