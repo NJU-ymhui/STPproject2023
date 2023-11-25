@@ -20,11 +20,11 @@ public class Client {
     private byte[] serverAddr = new byte[4];
     private int serverPort;
 
-    public void receive(Packet packet) {
+    protected void receive(Packet packet) {
         receivedPacket = packet;
     }
 
-    public byte[] getBytes(InputStream stream, int size) throws Exception{
+    protected byte[] getBytes(InputStream stream, int size) throws Exception{
         int byteRead, len = 0;
         byte[] buffer = new byte[size];
         while ((byteRead = stream.read()) != -1 && len < size) {
@@ -33,17 +33,17 @@ public class Client {
         return buffer;
     }
 
-    public boolean checkACK(Packet packet) { return packet.ackValid(); }
-    public boolean checkPSH(Packet packet) { return packet.pushNow(); }
-    public boolean checkRST(Packet packet) { return packet.isReset(); }
-    public boolean checkURG(Packet packet) { return packet.urgentValid(); }
+    protected boolean checkACK(Packet packet) { return packet.ackValid(); }
+    protected boolean checkPSH(Packet packet) { return packet.pushNow(); }
+    protected boolean checkRST(Packet packet) { return packet.isReset(); }
+    protected boolean checkURG(Packet packet) { return packet.urgentValid(); }
 
     /**
      * 检查FIN位，判断是否挥手释放连接
      * @param packet
      * @return boolean
      * */
-    public boolean checkFIN(Packet packet) {
+    protected boolean checkFIN(Packet packet) {
         return packet.checkFIN();
     }
     /**
@@ -51,7 +51,7 @@ public class Client {
      * @param packet
      * @return boolean
      * */
-    public boolean checkSYN(Packet packet) {
+    protected boolean checkSYN(Packet packet) {
         return packet.checkSYN();
     }
     /**
@@ -59,7 +59,7 @@ public class Client {
      * @param connectionSocket: 与客户端建立连结的服务端
      * @param packet 报文
      * */
-    public void send(Socket connectionSocket, Packet packet) throws IOException {
+    protected void send(Socket connectionSocket, Packet packet) throws IOException {
         OutputStream outToServer = connectionSocket.getOutputStream();
         DataOutputStream out = new DataOutputStream(outToServer);
         out.write(packet.getBytes());
@@ -68,7 +68,7 @@ public class Client {
      *回显当前报文内容，即显示收到的信息
      *回显格式：src:... dest:... id:... ack:... window:... data:...
      */
-    public void print() {
+    protected void print() {
         System.out.printf("src:%d dest:%d id:%s ack:%s window:%s data:%s\n",
                 receivedPacket.getSrcPort(),
                 receivedPacket.getDestPort(),
@@ -82,7 +82,7 @@ public class Client {
      * @param fromClient: 从客户端收到的字节流
      * @return Packet: 组装后的报文
      * */
-    public Packet buildPacket(byte[] fromClient) {
+    protected Packet buildPacket(byte[] fromClient) {
         int headSize = ((int) fromClient[12] >> 4) * 4;
         return new Packet(Arrays.copyOfRange(fromClient, 0, 2),
                 Arrays.copyOfRange(fromClient, 2, 4),
@@ -122,7 +122,7 @@ public class Client {
      * get (filename)
      */
     protected String[] commands = new String[]{"send (.*)", "get (.*)"};
-    public boolean run(String command) {
+    protected boolean run(String command) {
         for (String s : commands) {
 
         }
