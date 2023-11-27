@@ -32,7 +32,7 @@ project-
 > 例如：
 > ```
 > //运行服务端
-> C:\>javac Server.java
+> C:\>javac -encoding UTF-8 Server.java
 > C:\>java Server 80 path MSS
 > Server started! Listening on 80...
 > 

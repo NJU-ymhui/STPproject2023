@@ -1,4 +1,4 @@
-package src;
+
 
 public class Transformer {
     public static int toInteger(byte[] bytes) {
@@ -13,5 +13,14 @@ public class Transformer {
             res[i] = (byte) (number % (1 << (8 * (bytes - i) - 1)) / (1 << (8 * (bytes - i - 1) - 1)));
         }
         return res;
+    }
+    /**
+     *  计算checkSum
+     * @param data :根据数据计算检验和
+     * @return :报文中的检验和字段
+     * */
+    public static byte[] calculateCheckSum(Data data) {
+        //TODO
+        return null;
     }
 }

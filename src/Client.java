@@ -1,4 +1,4 @@
-package src;
+
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,7 +15,8 @@ public class Client {
 
     public Packet receivedPacket = null;
     public int MSS = 1500;
-    private int port;
+    protected int port;
+    protected Window window = new Window(); //创建一个窗口，维护这个window
 
     private byte[] serverAddr = new byte[4];
     private int serverPort;
@@ -95,6 +96,38 @@ public class Client {
                 Arrays.copyOfRange(fromClient, 20, fromClient.length),
                 new byte[]{},
                 MSS);
+    }
+    /**
+     * Client握手建立连接
+     * */
+    private static void buildConnection(Client client) {
+        //TODO
+    }
+    /**
+     * Client挥手释放连接
+     * */
+    private static void releaseConnection(Client client) {
+        //TODO
+    }
+    /**
+     * 数据传输
+     * @param host 发送方
+     * */
+    protected static void dataTransfer(Client host) {
+        //TODO
+        //使用并维护window进行此项任务
+        //step1: 用数据包填满window（需要检查是否可以装填）
+        //step2: 逐包发送，并对应答进行检查，更新window状态
+        //step3: 如果window所有数据包均被确认，发送下一窗口
+        //循环...
+    }
+    /**
+     * 对于收到的报文进行应答
+     * @param srcPacket 收到的报文
+     * @param connectionSocket 建立连接的服务端
+     * */
+    public void reply(Packet srcPacket, Socket connectionSocket) {
+        //TODO
     }
 
     public Client(String addr, String port) {

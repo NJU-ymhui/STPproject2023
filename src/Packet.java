@@ -1,4 +1,3 @@
-package src;
 
 public class Packet {
     private Data data = null;
